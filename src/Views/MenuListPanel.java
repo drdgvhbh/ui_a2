@@ -26,13 +26,13 @@ class MenuListPanel extends JPanel {
 
         }});
 
-        MenuItem item = new MenuItem("Club Sandwich", 3.99);
+/*        MenuItem item = new MenuItem("Club Sandwich", 3.99);
         this.add(item, new GridBagConstraints() {{
             gridx = 0;
             gridy = 1;
             anchor = GridBagConstraints.NORTH;
             weighty = GridBagConstraints.VERTICAL;
-        }});
+        }});*/
 
     }
 }
