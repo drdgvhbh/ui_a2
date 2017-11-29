@@ -14,7 +14,6 @@ class MenuListPanel extends JPanel {
 
         JLabel leftLabel = new JLabel(title);
         leftLabel.setFont(textFont);
-        leftLabel.setBorder(BorderFactory.createLineBorder(Color.black));
         this.add(leftLabel, new GridBagConstraints() {{
             gridx = 0;
             gridy = 0;

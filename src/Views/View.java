@@ -39,9 +39,16 @@ public class View extends JFrame implements IView {
 
         JPanel menuListContainer = new JPanel();
         menuListContainer.setLayout(new GridLayout(1, 2));
-        MenuListPanel menuTitle = new MenuListPanel("Food", foodList);
-        menuListContainer.add(menuTitle, BorderLayout.CENTER);
-        menuListContainer.add(new MenuListPanel("Drinks", drinkList), BorderLayout.CENTER);
+        MenuListPanel menuPanel = new MenuListPanel("Food", foodList);
+        menuPanel.setBorder(BorderFactory.createMatteBorder(
+            0,
+            0,
+            0,
+            1, Color.black));
+        menuListContainer.add(menuPanel, BorderLayout.CENTER);
+        menuListContainer.add(
+            new MenuListPanel("Drinks", drinkList),
+            BorderLayout.CENTER);
 
         mainPanel.add(menuListContainer);
 
