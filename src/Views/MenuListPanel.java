@@ -2,17 +2,14 @@ package Views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 class MenuListPanel extends JPanel {
-    MenuListPanel(String title) {
+    MenuListPanel(String title, Map<String, Double> items) {
         super();
         Font textFont = new Font("Tahoma", Font.BOLD, 18);
 
         GridBagLayout gridBagLayout = new GridBagLayout();
-/*/       gridBagLayout.columnWidths = new int[]{0};*/
-        gridBagLayout.rowHeights = new int[]{1};
-/*        gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};*/
         this.setLayout(gridBagLayout);
 
         JLabel leftLabel = new JLabel(title);
@@ -26,13 +23,31 @@ class MenuListPanel extends JPanel {
 
         }});
 
-/*        MenuItem item = new MenuItem("Club Sandwich", 3.99);
-        this.add(item, new GridBagConstraints() {{
+        this.add(new JPanel(), new GridBagConstraints() {{
             gridx = 0;
             gridy = 1;
             anchor = GridBagConstraints.NORTH;
-            weighty = GridBagConstraints.VERTICAL;
-        }});*/
+            weighty = 0.05;
+        }});
 
+        int row = 2;
+        for (Map.Entry<String, Double> item : items.entrySet()) {
+            final int rowCopy = row;
+            MenuItem menuItem = new MenuItem(item.getKey(), item.getValue());
+            this.add(menuItem, new GridBagConstraints() {{
+                gridx = 0;
+                gridy = rowCopy;
+                anchor = GridBagConstraints.NORTH;
+            }});
+            row++;
+        }
+
+        final int rowCopy = ++row;
+        this.add(new JPanel(), new GridBagConstraints() {{
+            gridx = 0;
+            gridy = rowCopy;
+            anchor = GridBagConstraints.NORTH;
+            weighty = GridBagConstraints.VERTICAL;
+        }});
     }
 }
