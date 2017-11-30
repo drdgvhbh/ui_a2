@@ -66,7 +66,7 @@ public class OrderListPanel extends JPanel implements IView<OrderListViewModel> 
             final int rowCopy = row;
             AbstractMenuItem menuItem = new RemoveMenuItem(
                 item.getValue() + "x " + item.getKey(),
-                itemPricing.get(item.getKey()));
+                item.getValue() * itemPricing.get(item.getKey()));
 
             this.add(menuItem, new GridBagConstraints() {{
                 gridx = 0;

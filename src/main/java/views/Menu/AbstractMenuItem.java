@@ -5,6 +5,7 @@ import views.IView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
 
 abstract class AbstractMenuItem extends JPanel implements IView<MenuItemViewModel> {
     private JButton button;
@@ -25,8 +26,9 @@ abstract class AbstractMenuItem extends JPanel implements IView<MenuItemViewMode
         nameLabel.setPreferredSize(new Dimension(110, 30));
         this.add(nameLabel);
 
-        JLabel priceLabel = new JLabel("$" + price);
-        priceLabel.setPreferredSize(new Dimension(50, 30));
+        JLabel priceLabel = new JLabel("$" + new DecimalFormat(
+            "#.00").format(price));
+        priceLabel.setPreferredSize(new Dimension(55, 30));
         this.add(priceLabel);
    }
 
