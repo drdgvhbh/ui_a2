@@ -67,7 +67,7 @@ public class View extends JFrame implements IView<ViewModel> {
 
         this.menuListPanels.add(new MenuListPanel(
             "Drinks",
-            foodList));
+            drinkList));
         menuListContainer.add(
             this.menuListPanels.get(this.menuListPanels.size() - 1),
             new GridBagConstraints() {{
