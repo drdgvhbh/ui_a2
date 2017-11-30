@@ -1,4 +1,5 @@
 package viewModels;
 
-public interface IViewModel<M> {
+public interface IViewModel{
+
 }

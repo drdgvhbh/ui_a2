@@ -1,21 +1,27 @@
 package views;
 
 import viewModels.ViewModel;
+import views.Menu.MenuListPanel;
+import views.Menu.OrderListPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Map.entry;
 
 public class View extends JFrame implements IView<ViewModel> {
-    private MenuListPanel foodPanel;
-    private MenuListPanel drinksPanel;
+    private java.util.List<MenuListPanel> menuListPanels;
+    private OrderListPanel orderListPanel;
 
     @Override
     public void bind(ViewModel viewModel) {
-        this.foodPanel.bind(viewModel.getMenuListViewModel());
-        this.drinksPanel.bind(viewModel.getMenuListViewModel());
+        for (MenuListPanel m : menuListPanels) {
+            m.bind(viewModel.getMenuListViewModel());
+        }
+        this.orderListPanel.bind(viewModel.getOrderListViewModel());
     }
 
     public View() {
@@ -28,6 +34,7 @@ public class View extends JFrame implements IView<ViewModel> {
             entry("Coca Cola", 1.25),
             entry("Bubble Tea", 3.99)
         );
+        this.menuListPanels = new ArrayList<>(4);
 
         this.setTitle("Restaurant App");
         this.setBounds(0, 0, 450, 600);
@@ -42,27 +49,47 @@ public class View extends JFrame implements IView<ViewModel> {
         mainPanel.add(new TitlePanel("Menu"), BorderLayout.NORTH);
 
         JPanel menuListContainer = new JPanel();
-        menuListContainer.setLayout(new GridLayout(1, 2));
-
-        foodPanel = new MenuListPanel("Food", foodList);
-        foodPanel.setBorder(BorderFactory.createMatteBorder(
-            0,
-            0,
-            0,
-            1, Color.black));
-        menuListContainer.add(foodPanel, BorderLayout.CENTER);
-
-        drinksPanel = new MenuListPanel("Drinks", drinkList);
-        drinksPanel.setBorder(BorderFactory.createMatteBorder(
-            0,
-            0,
-            0,
-            1, Color.black));
-        menuListContainer.add(
-            drinksPanel,
-            BorderLayout.CENTER);
-
+        menuListContainer.setLayout(new GridBagLayout());
         mainPanel.add(menuListContainer);
+
+        // Add food and drinks
+        this.menuListPanels.add(new MenuListPanel(
+            "Food",
+            foodList));
+        menuListContainer.add(
+            this.menuListPanels.get(this.menuListPanels.size() - 1),
+            new GridBagConstraints() {{
+                gridx = 0;
+                gridy = 0;
+                anchor = GridBagConstraints.NORTH;
+                weighty = GridBagConstraints.VERTICAL;
+            }});
+
+        this.menuListPanels.add(new MenuListPanel(
+            "Drinks",
+            foodList));
+        menuListContainer.add(
+            this.menuListPanels.get(this.menuListPanels.size() - 1),
+            new GridBagConstraints() {{
+                gridx = 1;
+                gridy = 0;
+                anchor = GridBagConstraints.NORTH;
+                weighty = GridBagConstraints.VERTICAL;
+            }});
+
+        Map<String, Double> mergedPricing = new HashMap<>(foodList);
+        mergedPricing.putAll(drinkList);
+        this.orderListPanel = new OrderListPanel("Order", mergedPricing);
+        menuListContainer.add(
+            this.orderListPanel,
+            new GridBagConstraints() {{
+                gridx = 0;
+                gridy = 1;
+                anchor = GridBagConstraints.NORTH;
+                gridwidth = 2;
+                weightx = GridBagConstraints.HORIZONTAL;
+                weighty = GridBagConstraints.VERTICAL;
+            }});
 
     }
 }

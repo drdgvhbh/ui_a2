@@ -1,18 +1,26 @@
-package views;
+package views.Menu;
 
-import viewModels.IViewModel;
 import viewModels.MenuListViewModel;
+import views.IView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
 
-class MenuListPanel extends JPanel implements IView<MenuListViewModel> {
-    java.util.List<MenuItem> menuItems;
+public class MenuListPanel extends JPanel implements IView<MenuListViewModel> {
+    private java.util.List<AbstractMenuItem> menuItems;
+    private String title;
+    private Map<String, Double> items;
 
-    MenuListPanel(String title, Map<String, Double> items) {
+    public MenuListPanel(String title, Map<String, Double> items) {
         super();
+        this.title = title;
+        this.items = items;
+        buildGUI();
+    }
+
+    protected void buildGUI() {
         menuItems = new ArrayList<>();
 
         Font textFont = new Font("Tahoma", Font.BOLD, 18);
@@ -40,7 +48,10 @@ class MenuListPanel extends JPanel implements IView<MenuListViewModel> {
         int row = 2;
         for (Map.Entry<String, Double> item : items.entrySet()) {
             final int rowCopy = row;
-            MenuItem menuItem = new MenuItem(item.getKey(), item.getValue());
+            AbstractMenuItem menuItem = new AddMenuItem(
+                item.getKey(),
+                item.getValue());
+
             this.add(menuItem, new GridBagConstraints() {{
                 gridx = 0;
                 gridy = rowCopy;
@@ -61,8 +72,16 @@ class MenuListPanel extends JPanel implements IView<MenuListViewModel> {
 
     @Override
     public void bind(MenuListViewModel viewModel) {
-        for (MenuItem m : menuItems) {
+        for (AbstractMenuItem m : menuItems) {
             m.bind(viewModel.getMenuItemViewModel());
         }
+    }
+
+    protected  Map<String, Double> getItems() {
+        return this.items;
+    }
+
+    protected void setItems(Map<String, Double> items) {
+        this.items = items;
     }
 }

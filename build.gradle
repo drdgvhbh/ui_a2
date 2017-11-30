@@ -11,10 +11,14 @@ repositories {
 
 def rxJavaVersion = '1.3.4'
 def rxSwingVersion = '0.27.0'
+def apacheCommonsVersion = "3.7"
 
 dependencies {
     compile "io.reactivex:rxjava:${rxJavaVersion}"
     compile "io.reactivex:rxswing:${rxSwingVersion}"
+    compile "org.apache.commons:commons-lang3:${apacheCommonsVersion}"
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
 
 }
 
