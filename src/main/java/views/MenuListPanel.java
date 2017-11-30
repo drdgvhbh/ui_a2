@@ -1,20 +1,28 @@
-package Views;
+package views;
+
+import viewModels.IViewModel;
+import viewModels.MenuListViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Map;
 
-class MenuListPanel extends JPanel {
+class MenuListPanel extends JPanel implements IView<MenuListViewModel> {
+    java.util.List<MenuItem> menuItems;
+
     MenuListPanel(String title, Map<String, Double> items) {
         super();
+        menuItems = new ArrayList<>();
+
         Font textFont = new Font("Tahoma", Font.BOLD, 18);
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         this.setLayout(gridBagLayout);
 
-        JLabel leftLabel = new JLabel(title);
-        leftLabel.setFont(textFont);
-        this.add(leftLabel, new GridBagConstraints() {{
+        JLabel labelTitle = new JLabel(title);
+        labelTitle.setFont(textFont);
+        this.add(labelTitle, new GridBagConstraints() {{
             gridx = 0;
             gridy = 0;
             anchor = CENTER;
@@ -38,6 +46,7 @@ class MenuListPanel extends JPanel {
                 gridy = rowCopy;
                 anchor = GridBagConstraints.NORTH;
             }});
+            menuItems.add(menuItem);
             row++;
         }
 
@@ -48,5 +57,12 @@ class MenuListPanel extends JPanel {
             anchor = GridBagConstraints.NORTH;
             weighty = GridBagConstraints.VERTICAL;
         }});
+    }
+
+    @Override
+    public void bind(MenuListViewModel viewModel) {
+        for (MenuItem m : menuItems) {
+            m.bind(viewModel.getMenuItemViewModel());
+        }
     }
 }

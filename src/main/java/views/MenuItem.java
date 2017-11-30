@@ -1,13 +1,18 @@
-package Views;
+package views;
+import rx.observables.SwingObservable;
+import viewModels.MenuItemViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 
-class MenuItem extends JPanel {
+class MenuItem extends JPanel implements IView<MenuItemViewModel> {
+    JButton button;
+
     MenuItem(String name, double price) {
         super();
+        System.out.println("Should I be 4?");
 
-        JButton button = new JButton("+1");
+        button = new JButton("+1");
         button.setMargin(new Insets(0, 0, 0, 0));
         button.setPreferredSize(new Dimension(30, 30));
         this.add(button);
@@ -21,4 +26,11 @@ class MenuItem extends JPanel {
         this.add(priceLabel);
    }
 
+    @Override
+    public void bind(MenuItemViewModel viewModel) {
+        System.out.println("DERP");
+        SwingObservable.fromButtonAction(button).asObservable().subscribe(x -> {
+            System.out.println("Hello world!");
+        });
+    }
 }

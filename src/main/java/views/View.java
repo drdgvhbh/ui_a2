@@ -1,6 +1,6 @@
-package Views;
+package views;
 
-import ViewModels.IViewModel;
+import viewModels.ViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,10 +8,14 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class View extends JFrame implements IView {
-    @Override
-    public void bind(IViewModel viewModel) {
+public class View extends JFrame implements IView<ViewModel> {
+    private MenuListPanel foodPanel;
+    private MenuListPanel drinksPanel;
 
+    @Override
+    public void bind(ViewModel viewModel) {
+        this.foodPanel.bind(viewModel.getMenuListViewModel());
+        this.drinksPanel.bind(viewModel.getMenuListViewModel());
     }
 
     public View() {
@@ -39,15 +43,23 @@ public class View extends JFrame implements IView {
 
         JPanel menuListContainer = new JPanel();
         menuListContainer.setLayout(new GridLayout(1, 2));
-        MenuListPanel menuPanel = new MenuListPanel("Food", foodList);
-        menuPanel.setBorder(BorderFactory.createMatteBorder(
+
+        foodPanel = new MenuListPanel("Food", foodList);
+        foodPanel.setBorder(BorderFactory.createMatteBorder(
             0,
             0,
             0,
             1, Color.black));
-        menuListContainer.add(menuPanel, BorderLayout.CENTER);
+        menuListContainer.add(foodPanel, BorderLayout.CENTER);
+
+        drinksPanel = new MenuListPanel("Drinks", drinkList);
+        drinksPanel.setBorder(BorderFactory.createMatteBorder(
+            0,
+            0,
+            0,
+            1, Color.black));
         menuListContainer.add(
-            new MenuListPanel("Drinks", drinkList),
+            drinksPanel,
             BorderLayout.CENTER);
 
         mainPanel.add(menuListContainer);
