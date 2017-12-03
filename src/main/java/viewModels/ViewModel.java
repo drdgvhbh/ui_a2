@@ -10,8 +10,6 @@ public class ViewModel implements IViewModel {
     private final MenuListViewModel menuListViewModel;
     private final OrderListViewModel orderListViewModel;
 
-
-
     public ViewModel(Model model) {
         this.menuListViewModel = new MenuListViewModel(model);
         this.orderListViewModel = new OrderListViewModel(model);

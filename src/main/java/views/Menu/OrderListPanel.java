@@ -20,6 +20,7 @@ public class OrderListPanel extends JPanel implements IView<OrderListViewModel> 
     private Map<String, Integer> itemQuantity;
     private Map<String, Double> itemPricing;
     private List<AbstractMenuItem> orderList;
+    private OrderListViewModel viewModel;
 
     public OrderListPanel(String title, Map<String, Double> itemPricing) {
         super();
@@ -84,16 +85,19 @@ public class OrderListPanel extends JPanel implements IView<OrderListViewModel> 
             anchor = GridBagConstraints.NORTH;
             weighty = GridBagConstraints.VERTICAL;
         }});
+        for (AbstractMenuItem m : orderList) {
+            m.bind(viewModel.getMenuItemViewModel());
+        }
         this.revalidate();
     }
 
     @Override
     public void bind(OrderListViewModel viewModel) {
+        this.viewModel= viewModel;
         viewModel.getItemListChanged().subscribe(x -> {
             this.itemQuantity = x;
             this.buildGUI();
-            // super.bind(viewModel);
         });
-        logger.debug("{}'s view model binded.", this.getClass().getName());
+        logger.debug("{}'s view model bound.", this.getClass().getName());
     }
 }

@@ -19,6 +19,5 @@ public class AddMenuItem extends AbstractMenuItem {
             viewModel.getAddButtonClick().onNext(pair);
             viewModel.getAddButtonClick().onCompleted();
         });
-        SwingObservable.fromButtonAction(this.getButton()).subscribe(viewModel.getRemoveButtonClick());
     }
 }

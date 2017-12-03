@@ -15,6 +15,7 @@ import static java.util.Map.entry;
 public class View extends JFrame implements IView<ViewModel> {
     private java.util.List<MenuListPanel> menuListPanels;
     private OrderListPanel orderListPanel;
+    private TotalPanel totalPanel;
 
     @Override
     public void bind(ViewModel viewModel) {
@@ -22,6 +23,7 @@ public class View extends JFrame implements IView<ViewModel> {
             m.bind(viewModel.getMenuListViewModel());
         }
         this.orderListPanel.bind(viewModel.getOrderListViewModel());
+        this.totalPanel.bind(viewModel.getOrderListViewModel());
     }
 
     public View() {
@@ -50,7 +52,7 @@ public class View extends JFrame implements IView<ViewModel> {
 
         JPanel menuListContainer = new JPanel();
         menuListContainer.setLayout(new GridBagLayout());
-        mainPanel.add(menuListContainer);
+        mainPanel.add(menuListContainer, BorderLayout.CENTER);
 
         // Add food and drinks
         this.menuListPanels.add(new MenuListPanel(
@@ -90,6 +92,9 @@ public class View extends JFrame implements IView<ViewModel> {
                 weightx = GridBagConstraints.HORIZONTAL;
                 weighty = GridBagConstraints.VERTICAL;
             }});
+
+        this.totalPanel = new TotalPanel("Total");
+        mainPanel.add(totalPanel, BorderLayout.SOUTH);
 
     }
 }
